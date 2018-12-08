@@ -28,8 +28,7 @@ if test:
 X = train_data.drop("label", 1)
 y = train_data['label']
 
-# get features
-# construct the argument parse and parse the arguments
+## construct the argument parse and parse the arguments
 ap = argparse.ArgumentParser()
 ap.add_argument("-m", "--model", required=True,
                 help="name of classification model- one of knn or svm")
@@ -37,7 +36,8 @@ ap.add_argument("-f", "--feature", required=True,
                 help="name of used feature- one of baseline, hog or sift")
 args = vars(ap.parse_args())
 
-# split train ans test sets according to selected feature
+# 2. get features
+## split train ans test sets according to selected feature
 if args["feature"] == 'baseline':
     (trainData, valData, trainLabels, valLabels) = train_test_split(X,
                                                                     y, test_size=0.3, random_state=42)
@@ -62,11 +62,11 @@ else:
     (trainData, valData, trainLabels, valLabels) = train_test_split(comb,
                                                                     y, test_size=0.3, random_state=42)
 
-# classify according to selected model
+# 3. classify according to selected model
 print('execute classification using {model}'.format(model=args["model"]))
 if args["model"] == 'knn':
     valPred, valPred_prob = knn_cls.knn(trainData, valData, trainLabels, valLabels)
 else:
     valPred, valPred_prob = svm_cls.SVM(trainData, valData, trainLabels, valLabels)
-###ROC,AUC
+# 4. ROC,AUC
 utils.plot_roc(valLabels, valPred_prob, title="MNIST {model} ROC".format(model=args["model"]))
