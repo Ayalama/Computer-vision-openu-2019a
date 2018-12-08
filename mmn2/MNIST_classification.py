@@ -11,7 +11,7 @@ from mmn2 import utils
 
 mnist_dir = "MNIST\\"
 test = True
-test_size = 1000
+test_size = 20000
 
 # 1. load data set
 train_data = pd.read_csv(mnist_dir + "train.csv")
@@ -38,19 +38,28 @@ ap.add_argument("-f", "--feature", required=True,
 args = vars(ap.parse_args())
 
 # split train ans test sets according to selected feature
-if args["feature"] == 'hog':
+if args["feature"] == 'baseline':
+    (trainData, valData, trainLabels, valLabels) = train_test_split(X,
+                                                                    y, test_size=0.3, random_state=42)
+elif args["feature"] == 'hog':
     digits = np.asarray(X).reshape((X.shape[0], 28, 28))
     hog_rep = features.hog_batch_representation(digits, orientations=3, pixelsPerCell=(2, 2),
                                                 cellsPerBlock=(4, 4), block_norm='L2-Hys')
     (trainData, valData, trainLabels, valLabels) = train_test_split(np.array(hog_rep),
-                                                                    y, test_size=0.3, random_state=42)
+                                                                 y, test_size=0.3, random_state=42)
 elif args["feature"] == 'sift':
     images = X
     X_sift = features.sift_batch_representation(images)
     (trainData, valData, trainLabels, valLabels) = train_test_split(X_sift,
                                                                     y, test_size=0.3, random_state=42)
 else:
-    (trainData, valData, trainLabels, valLabels) = train_test_split(X,
+    digits = np.asarray(X).reshape((X.shape[0], 28, 28))
+    hog_rep = features.hog_batch_representation(digits, orientations=3, pixelsPerCell=(2, 2),
+                                                cellsPerBlock=(4, 4), block_norm='L2-Hys')
+    images = X
+    X_sift = features.sift_batch_representation(images)
+    comb = np.concatenate((hog_rep, X_sift), axis=1)
+    (trainData, valData, trainLabels, valLabels) = train_test_split(comb,
                                                                     y, test_size=0.3, random_state=42)
 
 # classify according to selected model

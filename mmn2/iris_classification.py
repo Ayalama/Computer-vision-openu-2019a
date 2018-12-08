@@ -36,9 +36,9 @@ else:
 ###ROC,AUC
 utils.plot_roc(valLabels, valPred_prob, title="Iris {model} ROC".format(model=args["model"]))
 
-pd.DataFrame(trainData).to_csv("Iris\\trainData.csv")
-pd.DataFrame(valData).to_csv("Iris\\valData.csv")
-pd.DataFrame(trainLabels).to_csv("Iris\\trainLabels.csv")
-pd.DataFrame(valLabels).to_csv("Iris\\valLabels.csv")
-pd.DataFrame(valPred).to_csv("Iris\\valPred_{model}.csv".format(model=args["model"]))
-pd.DataFrame(valPred_prob).to_csv("Iris\\valPred_prob_{model}.csv".format(model=args["model"]))
+# pd.DataFrame(trainData).to_csv("Iris\\trainData.csv")
+# pd.DataFrame(valData).to_csv("Iris\\valData.csv")
+# pd.DataFrame(trainLabels).to_csv("Iris\\trainLabels.csv")
+# pd.DataFrame(valLabels).to_csv("Iris\\valLabels.csv")
+# pd.DataFrame(valPred).to_csv("Iris\\valPred_{model}.csv".format(model=args["model"]))
+# pd.DataFrame(valPred_prob).to_csv("Iris\\valPred_prob_{model}.csv".format(model=args["model"]))

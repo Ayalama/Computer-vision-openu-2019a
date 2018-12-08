@@ -1,12 +1,10 @@
-import numpy as np
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import roc_curve, auc
-from scipy import interp
-import matplotlib.pyplot as plt
 from itertools import cycle
-from mmn2 import load_img
-from sklearn.datasets.samples_generator import make_blobs
+
+import matplotlib.pyplot as plt
+import numpy as np
+from scipy import interp
 from sklearn.decomposition import PCA
+from sklearn.metrics import roc_curve, auc
 
 
 def plot_confusion(confusion_matrix):
@@ -89,31 +87,6 @@ def plot_roc(test_y, tesy_y_prob, title=''):
     plt.legend(loc="lower right")
     plt.title(title)
     plt.show()
-
-
-def load_data_set(dataset="MNIST"):
-    images = None
-
-    ##############load data set of images and prepare training, test and validation sets###############
-    if dataset == "MNIST":
-        images = load_img.load_train_from_dir()
-    if dataset == "iris":
-        images = load_img.load_iris()
-
-    # take the MNIST data and construct the training and testing split, using 75% of the
-    # data for training and 25% for testing
-    # visualize_images_set(images.data)
-    (trainData, valData, trainLabels, valLabels) = train_test_split(np.array(images.data),
-                                                                    images.target, test_size=0.25, random_state=42)
-
-    # # now, let's take 10% of the training data and use that for validation
-    # (trainData, valData, trainLabels, valLabels) = train_test_split(trainData, trainLabels,
-    #                                                                 test_size=0.1, random_state=84)
-
-    # show the sizes of each data split
-    print("training data points: {}".format(len(trainLabels)))
-    print("validation data points: {}".format(len(valLabels)))
-    return (trainData, valData, trainLabels, valLabels)
 
 
 def visualize_images_set(img_data):
