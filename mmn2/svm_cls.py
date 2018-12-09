@@ -83,8 +83,7 @@ def visualize_classes_2d(x_train, y_train):
 
 
 def SVM(trainData, valData, trainLabels, valLabels):
-    # initialize the values of k for our k-Nearest Neighbor classifier along with the
-    # CVals = [10 ** (-20), 10 ** (-10), 0.001, 0.1, 1, 10, 20]
+    # initialize the values of c for our SVM classifier
     CVals = [10 ** (-20), 10 ** (-10), 0.001, 0.1, 1]
 
     # list of accuracies for each value of c
@@ -95,8 +94,8 @@ def SVM(trainData, valData, trainLabels, valLabels):
     valPred_best=None
     valPred_prob_best=None
 
-    for fig_num, kernel in enumerate(('poly', 'linear')):
-    # for fig_num, kernel in enumerate(('poly', 'linear', 'rbf')):
+    # for fig_num, kernel in enumerate(('poly', 'linear')):
+    for fig_num, kernel in enumerate(('poly', 'linear', 'rbf')):
         print("kernal = " + kernel + " begin ")
         for c in CVals:
             print("C = " + str(c) + " begin ")
