@@ -34,8 +34,6 @@ def knn(trainData, valData, trainLabels, valLabels):
         print("k=%d, accuracy=%.2f%%" % (k, score * 100))
         print("Complete time: " + str(end - start) + " Secs.")
 
-    # plot accuracy by K values
-    plt.plot(kVals, accuracies)
     plt.xlabel('K value (number of neighbors)')
     plt.ylabel('accuracy of validation set (25%)')
     plt.show()
@@ -43,6 +41,8 @@ def knn(trainData, valData, trainLabels, valLabels):
     # find the value of k that has the largest accuracy
     i = int(np.argmax(accuracies))
     print("k=%d achieved highest accuracy of %.2f%% on validation data" % (kVals[i], accuracies[i] * 100))
+    # plot accuracy by K values
+    plt.plot(kVals, accuracies)
     model = KNeighborsClassifier(n_neighbors=kVals[i])
     model.fit(trainData, trainLabels)
     valPred = model.predict(valData)

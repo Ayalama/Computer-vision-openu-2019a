@@ -84,16 +84,19 @@ def visualize_classes_2d(x_train, y_train):
 
 def SVM(trainData, valData, trainLabels, valLabels):
     # initialize the values of k for our k-Nearest Neighbor classifier along with the
-    CVals = [10 ** (-20), 10 ** (-10), 0.001, 0.1, 1, 10, 20]
-    # CVals = [0.1, 1, 10, 100]
-    # list of accuracies for each value of k
-    accuracies = []
-    best_c = 0
-    best_kernel = 'linear'
-    best_accuracy = 0
+    # CVals = [10 ** (-20), 10 ** (-10), 0.001, 0.1, 1, 10, 20]
+    CVals = [10 ** (-20), 10 ** (-10), 0.001, 0.1, 1]
 
-    # for fig_num, kernel in enumerate(('poly','linear','rbf')):
-    for fig_num, kernel in enumerate(('poly', 'linear', 'rbf')):
+    # list of accuracies for each value of c
+    accuracies = []
+    best_c = 10 ** (-20)
+    best_kernel = 'poly'
+    best_accuracy = 0
+    valPred_best=None
+    valPred_prob_best=None
+
+    for fig_num, kernel in enumerate(('poly', 'linear')):
+    # for fig_num, kernel in enumerate(('poly', 'linear', 'rbf')):
         print("kernal = " + kernel + " begin ")
         for c in CVals:
             print("C = " + str(c) + " begin ")
@@ -130,12 +133,9 @@ def SVM(trainData, valData, trainLabels, valLabels):
             best_c = CVals[i]
             best_kernel = kernel
             best_accuracy = accuracies[i]
+            valPred_best=valPred
+            valPred_prob_best=valPred_prob
         accuracies = []
     plt.show()
 
-    # find the value of c that has the largest accuracy
-    model = svm.SVC(kernel=best_kernel, C=best_c, degree=3, probability=True)
-    model.fit(trainData, trainLabels)
-    valPred = model.predict(valData)
-    valPred_prob = model.predict_proba(valData)
-    return valPred, valPred_prob
+    return valPred_best, valPred_prob_best
